@@ -1,32 +1,42 @@
-# React + TypeScript + Vite
+# Our Eternal Bond (One Wish Willow)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A beautiful, interactive birthday puzzle experience built for Gobla.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Mystery:** A sequential puzzle game where the user must decipher codes, match memories, connect stars, and forge word chains to unlock their birthday wish.
+- **Retro Product Aesthetic:** Designed with a vintage, magical catalog vibe, utilizing a carefully selected color palette (cream, brown, red, gold).
+- **Responsive UI:** Fully mobile-friendly and beautiful across all devices.
+- **Sound & Effects:** Features subtle background ambiance, magical chimes, text-to-speech narration, and interactive particle effects to create an immersive experience.
+- **Wish Sealing (EmailJS):** Automatically and silently seals the user's final birthday wish and sends it to their designated email using EmailJS.
 
-## React Compiler
+## Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19**
+- **TypeScript**
+- **Vite**
+- **Tailwind CSS 4.3**
+- **EmailJS** for silent background email delivery
 
-## Expanding the Oxlint configuration
+## Running Locally
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+1. Clone the repository and install dependencies:
+   ```bash
+   npm install
+   ```
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+2. Start the development server (automatically clears the cache if needed):
+   ```bash
+   npm start
+   ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+3. Open `http://localhost:5173` in your browser.
+
+## Customization
+
+The email delivery system is powered by EmailJS. If you wish to configure it for another account:
+1. Update your Service ID, Template ID, and Public Key in `src/pages/WishReveal.tsx`.
+2. Ensure your EmailJS template expects `wish_text` and `email` variables (if applicable).
+
+---
+*Created as a digital birthday gift. 100% magical.*
