@@ -23,7 +23,7 @@ export default function WishCipher({ onComplete, particles }: WishCipherProps) {
   const cipheredText = wish ? applyCipher(wish, cipherMode) : '';
 
   useEffect(() => {
-    whisper('Speak your wish into the machine, Gobla... let the willow hear you...');
+    whisper('Write your wish into the machine, Gobla... let the willow receive it...');
   }, []);
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,7 +51,7 @@ export default function WishCipher({ onComplete, particles }: WishCipherProps) {
       
       setTimeout(() => {
         onComplete(wish, cipherMode);
-      }, 2000);
+      }, 1500);
     }, 1200);
   }, [wish, sealed, cipherMode, onComplete, particles]);
 

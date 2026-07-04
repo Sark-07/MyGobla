@@ -43,13 +43,13 @@ export default function App() {
     setTimeout(() => {
       navigate(LEVEL_ROUTES[level] || '/');
       setTransitionState('opening');
-      setTimeout(() => setTransitionState('idle'), 600);
-    }, 600);
+      setTimeout(() => setTransitionState('idle'), 550);
+    }, 550);
   }, [navigate, transitionState]);
 
   const onLevelComplete = useCallback((level: number) => {
     completeLevel(level);
-    setTimeout(() => goToLevel(level + 1), 800);
+    setTimeout(() => goToLevel(level + 1), 200);
   }, [completeLevel, goToLevel]);
 
   const showProgress = location.pathname !== '/';
@@ -61,11 +61,10 @@ export default function App() {
     <>
       <ParticleCanvas ref={particlesRef} />
 
-      {/* Magical Curtain Transition */}
+      {/* Magical CRT Transition */}
       {transitionState !== 'idle' && (
-        <div className="fixed inset-0 z-[1000] flex pointer-events-auto overflow-hidden">
-          <div className={`curtain curtain-left ${transitionState}`} />
-          <div className={`curtain curtain-right ${transitionState}`} />
+        <div className={`crt-overlay ${transitionState}`}>
+          <div className="crt-screen" />
         </div>
       )}
 
