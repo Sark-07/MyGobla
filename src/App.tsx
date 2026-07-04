@@ -10,13 +10,13 @@ import { ParticleCanvas, type ParticleCanvasRef } from './components/ParticleCan
 import { ProgressBar } from './components/ProgressBar';
 import { playTransitionWhoosh, startAmbient } from './lib/sfx';
 
-import Landing from './pages/Landing';
-import CaesarCipher from './pages/CaesarCipher';
-import MemoryMatch from './pages/MemoryMatch';
-import WordChain from './pages/WordChain';
-import StarConnect from './pages/StarConnect';
-import WishCipher from './pages/WishCipher';
-import WishReveal from './pages/WishReveal';
+import Landing from './pages/Landing.tsx';
+import CaesarCipher from './pages/CaesarCipher.tsx';
+import MemoryMatch from './pages/MemoryMatch.tsx';
+import WordChain from './pages/WordChain.tsx';
+import StarConnect from './pages/StarConnect.tsx';
+import WishCipher from './pages/WishCipher.tsx';
+import WishReveal from './pages/WishReveal.tsx';
 
 const LEVEL_ROUTES = ['/', '/cipher', '/memory', '/chain', '/stars', '/wish-machine', '/reveal'];
 

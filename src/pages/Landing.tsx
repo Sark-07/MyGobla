@@ -117,7 +117,7 @@ export default function Landing({ onStart, initAudio, particles }: LandingProps)
             <div className="space-y-4 mb-8">
               <p className="font-display text-base text-center italic"
                  style={{ color: 'var(--oww-brown)' }}>
-                "Amaze your friends! Remove from the box<br/>and just make a wish!"
+                "Remove from the box and just make a wish!"
               </p>
 
               {/* Instructions box */}

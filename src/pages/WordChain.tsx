@@ -24,7 +24,7 @@ const CHAIN: ChainLink[] = [
   { answer: 'PARTY', clue: 'A celebration with friends and cake', hint: 'P _ _ _ Y' },
   { answer: 'HEART', clue: 'Where love lives, it beats for you', hint: 'H _ _ _ T' },
   { answer: 'DREAM', clue: 'What you see when you close your eyes and wish', hint: 'D _ _ _ M' },
-  { answer: 'MAGIC', clue: 'What the willow promises in every wish', hint: 'M _ _ _ C' },
+  { answer: 'LOVE', clue: 'The invisible spell that binds two hearts together', hint: 'L _ _ E' },
 ];
 
 export default function WordChain({ onComplete, particles }: WordChainProps) {
