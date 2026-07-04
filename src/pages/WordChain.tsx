@@ -80,17 +80,17 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
 
   return (
     <div className="w-full flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-8 overflow-hidden"
-         style={{ backgroundColor: 'var(--oww-cream)' }}>
-      
+      style={{ backgroundColor: 'var(--oww-cream)' }}>
+
       <div className="max-w-xl w-full">
         {/* Header */}
         <div className="text-center mb-8 stagger">
           <span className="oww-tag mb-4 inline-block">LEVEL III</span>
           <h2 className="oww-title-lg mb-2" style={{ color: 'var(--oww-black)' }}>
-            Spark The <span style={{ color: 'var(--oww-red)' }}>Middle</span>
+            Chain Of <span style={{ color: 'var(--oww-red)' }}>Fate</span>
           </h2>
           <p className="font-mono text-xs tracking-[0.1em] uppercase"
-             style={{ color: 'var(--oww-brown-light)' }}>
+            style={{ color: 'var(--oww-brown-light)' }}>
             Solve each word to light the willow branch
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
         {/* ── Willow Branch Visualization ── */}
         <div className="oww-card mb-6">
           <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-center mb-6"
-             style={{ color: 'var(--oww-red)' }}>
+            style={{ color: 'var(--oww-red)' }}>
             ✦ THE WILLOW BRANCH ✦
           </p>
 
@@ -116,15 +116,15 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
                     {/* Top connector */}
                     {i > 0 && (
                       <div className="w-0.5 h-3 transition-colors duration-500"
-                           style={{ backgroundColor: solvedWords.includes(CHAIN[i - 1].answer) ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }} />
+                        style={{ backgroundColor: solvedWords.includes(CHAIN[i - 1].answer) ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }} />
                     )}
                     {/* Node */}
                     <div className={`
                       w-8 h-8 flex items-center justify-center border-2 transition-all duration-500
                       font-mono text-xs font-bold
-                      ${isSolved 
+                      ${isSolved
                         ? 'border-[var(--oww-gold)] bg-[var(--oww-gold)] text-[var(--oww-black)] shadow-[0_0_12px_rgba(212,168,83,0.4)]'
-                        : isCurrent 
+                        : isCurrent
                           ? 'border-[var(--oww-red)] bg-transparent text-[var(--oww-red)] anim-pulse-ember'
                           : 'border-[var(--oww-brown-light)] bg-transparent text-[var(--oww-brown-light)] opacity-40'}
                     `}>
@@ -133,39 +133,39 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
                     {/* Bottom connector */}
                     {i < CHAIN.length - 1 && (
                       <div className="w-0.5 h-3 transition-colors duration-500"
-                           style={{ backgroundColor: isSolved ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }} />
+                        style={{ backgroundColor: isSolved ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }} />
                     )}
                   </div>
 
                   {/* Word card */}
                   <div className={`
                     flex-1 p-3 border-2 transition-all duration-500
-                    ${isSolved 
+                    ${isSolved
                       ? 'border-[var(--oww-gold)] bg-[rgba(212,168,83,0.08)]'
-                      : isCurrent 
+                      : isCurrent
                         ? 'border-[var(--oww-black)] bg-[var(--oww-cream-light)]'
                         : 'border-[var(--oww-brown-light)] bg-transparent opacity-40'}
                   `}>
                     {isSolved ? (
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-sm font-bold tracking-[0.12em]"
-                              style={{ color: 'var(--oww-gold)' }}>
+                          style={{ color: 'var(--oww-gold)' }}>
                           {link.answer}
                         </span>
                         <span className="oww-stamp text-[8px] py-0.5 px-2"
-                              style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(-3deg)' }}>
+                          style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(-3deg)' }}>
                           SOLVED
                         </span>
                       </div>
                     ) : isCurrent ? (
                       <div>
                         <p className="font-display text-sm italic mb-1"
-                           style={{ color: 'var(--oww-brown)' }}>
+                          style={{ color: 'var(--oww-brown)' }}>
                           "{link.clue}"
                         </p>
                         {showHint && (
                           <p className="font-mono text-xs tracking-[0.15em] anim-fade-in"
-                             style={{ color: 'var(--oww-red)' }}>
+                            style={{ color: 'var(--oww-red)' }}>
                             HINT: {link.hint}
                           </p>
                         )}
@@ -180,6 +180,15 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
               );
             })}
           </div>
+          {/* Solved stamp */}
+          {allSolved && (
+            <div className="flex justify-center mt-4 anim-stamp-in py-4">
+              <span className="oww-stamp text-sm px-6 py-2"
+                style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(-4deg)' }}>
+                ✦ BRANCH IGNITED ✦
+              </span>
+            </div>
+          )}
         </div>
 
         {/* ── Input Area ── */}
@@ -200,7 +209,7 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
                 style={{ borderColor: 'var(--oww-brown-light)', color: 'var(--oww-black)' }}
               />
               <button type="submit"
-                      className="font-mono text-sm font-bold tracking-[0.08em] uppercase
+                className="font-mono text-sm font-bold tracking-[0.08em] uppercase
                                  px-6 py-3 border-2 border-[var(--oww-black)] bg-[var(--oww-black)]
                                  text-[var(--oww-cream)] transition-colors
                                  hover:bg-[var(--oww-cream)] hover:text-[var(--oww-black)]">
@@ -208,19 +217,9 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
               </button>
             </form>
             <p className="font-mono text-[10px] mt-3 text-center"
-               style={{ color: 'var(--oww-brown-light)' }}>
+              style={{ color: 'var(--oww-brown-light)' }}>
               WORD {currentIndex + 1} OF {CHAIN.length}
             </p>
-          </div>
-        )}
-
-        {/* Solved stamp */}
-        {allSolved && (
-          <div className="flex justify-center mt-4 anim-stamp-in">
-            <span className="oww-stamp text-sm px-6 py-2"
-                  style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(-4deg)' }}>
-              ✦ BRANCH IGNITED ✦
-            </span>
           </div>
         )}
       </div>
