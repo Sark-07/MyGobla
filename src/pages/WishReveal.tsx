@@ -24,7 +24,7 @@ through ciphers, symbols, and words — all leading here, to this moment.
 
 Every puzzle was a piece of you. The spark, the heart, the dream, the love.
 
-You are extraordinary. You are loved. You are the wish that came true.
+You are extraordinary. You are loved. You are the wish that came true. I'm so proud of you.
 
 Happy Birthday, My Gobla.
 

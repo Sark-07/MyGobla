@@ -117,7 +117,7 @@ export default function Landing({ onStart, initAudio, particles }: LandingProps)
             <div className="space-y-4 mb-8">
               <p className="font-display text-base text-center italic"
                  style={{ color: 'var(--oww-brown)' }}>
-                "Remove from the box and just make a wish!"
+                "Unravel the mystery and just make a wish!"
               </p>
 
               {/* Instructions box */}
@@ -129,7 +129,7 @@ export default function Landing({ onStart, initAudio, particles }: LandingProps)
                 </p>
                 <div className="space-y-2 font-mono text-xs"
                      style={{ color: 'var(--oww-brown)' }}>
-                  <p><span className="inline-block w-4 text-center font-bold" style={{ color: 'var(--oww-red)' }}>1.</span> Remove from the box</p>
+                  <p><span className="inline-block w-4 text-center font-bold" style={{ color: 'var(--oww-red)' }}>1.</span> Unravel the mystery</p>
                   <p><span className="inline-block w-4 text-center font-bold" style={{ color: 'var(--oww-red)' }}>2.</span> Make a wish</p>
                   <p><span className="inline-block w-4 text-center font-bold" style={{ color: 'var(--oww-red)' }}>3.</span> Spark the middle and break it in half</p>
                 </div>
