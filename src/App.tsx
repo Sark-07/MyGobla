@@ -9,6 +9,7 @@ import { useGameState } from './hooks/useGameState';
 import { ParticleCanvas, type ParticleCanvasRef } from './components/ParticleCanvas';
 import { ProgressBar } from './components/ProgressBar';
 import { playTransitionWhoosh, startAmbient } from './lib/sfx';
+import { Layout } from './components/Layout';
 
 import Landing from './pages/Landing.tsx';
 import CaesarCipher from './pages/CaesarCipher.tsx';
@@ -75,47 +76,49 @@ export default function App() {
         />
       )}
 
-      <div className={`${showProgress ? 'pt-12' : ''} min-h-screen`}>
-        <Routes>
-          <Route path="/" element={
-            <Landing 
-              onStart={() => { initAudio(); onLevelComplete(0); }}
-              initAudio={initAudio}
-              particles={ps} 
-            />
-          } />
-          <Route path="/cipher" element={
-            isLevelUnlocked(1) 
-              ? <CaesarCipher onComplete={() => onLevelComplete(1)} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/memory" element={
-            isLevelUnlocked(2)
-              ? <MemoryMatch onComplete={() => onLevelComplete(2)} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/chain" element={
-            isLevelUnlocked(3)
-              ? <WordChain onComplete={() => onLevelComplete(3)} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/stars" element={
-            isLevelUnlocked(4)
-              ? <StarConnect onComplete={() => onLevelComplete(4)} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/wish-machine" element={
-            isLevelUnlocked(5)
-              ? <WishCipher onComplete={(text, mode) => { setWish(text, mode); onLevelComplete(5); }} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/reveal" element={
-            isLevelUnlocked(6)
-              ? <WishReveal wishText={state.wishText} wishCipherMode={state.wishCipherMode} onRestart={() => { resetGame(); navigate('/'); }} particles={ps} />
-              : <Navigate to="/" replace />
-          } />
-        </Routes>
-      </div>
+      <Layout>
+        <div className={`${showProgress ? 'pt-12' : ''} h-full flex flex-col`}>
+          <Routes>
+            <Route path="/" element={
+              <Landing 
+                onStart={() => { initAudio(); onLevelComplete(0); }}
+                initAudio={initAudio}
+                particles={ps} 
+              />
+            } />
+            <Route path="/cipher" element={
+              isLevelUnlocked(1) 
+                ? <CaesarCipher onComplete={() => onLevelComplete(1)} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/memory" element={
+              isLevelUnlocked(2)
+                ? <MemoryMatch onComplete={() => onLevelComplete(2)} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/chain" element={
+              isLevelUnlocked(3)
+                ? <WordChain onComplete={() => onLevelComplete(3)} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/stars" element={
+              isLevelUnlocked(4)
+                ? <StarConnect onComplete={() => onLevelComplete(4)} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/wish-machine" element={
+              isLevelUnlocked(5)
+                ? <WishCipher onComplete={(text, mode) => { setWish(text, mode); onLevelComplete(5); }} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/reveal" element={
+              isLevelUnlocked(6)
+                ? <WishReveal wishText={state.wishText} wishCipherMode={state.wishCipherMode} onRestart={() => { resetGame(); navigate('/'); }} particles={ps} />
+                : <Navigate to="/" replace />
+            } />
+          </Routes>
+        </div>
+      </Layout>
     </>
   );
 }

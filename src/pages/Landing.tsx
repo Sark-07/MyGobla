@@ -38,7 +38,7 @@ export default function Landing({ onStart, initAudio, particles }: LandingProps)
   // Initial "click to enter" gate (required for audio)
   if (!entered) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4"
+      <div className="w-full h-full flex flex-col items-center justify-center px-4"
            style={{ backgroundColor: 'var(--oww-black)' }}>
         <div className="text-center stagger">
           {/* Stars decoration */}
@@ -81,7 +81,7 @@ export default function Landing({ onStart, initAudio, particles }: LandingProps)
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-12"
          style={{ backgroundColor: 'var(--oww-cream)' }}>
       
       {showContent && (

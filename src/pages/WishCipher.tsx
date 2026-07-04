@@ -56,7 +56,7 @@ export default function WishCipher({ onComplete, particles }: WishCipherProps) {
   }, [wish, sealed, cipherMode, onComplete, particles]);
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center px-4 py-16 transition-colors duration-1000 ${
+    <div className={`w-full h-full flex flex-col items-center justify-center px-4 py-16 transition-colors duration-1000 ${
       cracking ? 'bg-[var(--oww-black)]' : ''
     }`}
          style={{ backgroundColor: cracking ? undefined : 'var(--oww-cream)' }}>

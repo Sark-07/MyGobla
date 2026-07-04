@@ -94,7 +94,7 @@ export default function SymbolCipher({ onComplete, particles }: SymbolCipherProp
   }, [selectedSymbol, solved]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-16"
          style={{ backgroundColor: 'var(--oww-cream)' }}
          tabIndex={0}
          onKeyDown={handleLetterInput}>

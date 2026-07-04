@@ -112,7 +112,7 @@ export default function MemoryMatch({ onComplete, particles }: MemoryMatchProps)
   }, [cards, flippedIds, solved, particles]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-16"
          style={{ backgroundColor: 'var(--oww-cream)' }}>
       
       <div className="max-w-lg w-full">

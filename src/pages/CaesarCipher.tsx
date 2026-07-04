@@ -65,7 +65,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-16"
          style={{ backgroundColor: 'var(--oww-cream)' }}>
       
       <div className="max-w-xl w-full">
@@ -73,7 +73,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
         <div className="text-center mb-8 stagger">
           <span className="oww-tag mb-4 inline-block">LEVEL I</span>
           <h2 className="oww-title-lg mb-2" style={{ color: 'var(--oww-black)' }}>
-            Remove From<br /><span style={{ color: 'var(--oww-red)' }}>The Box</span>
+            Decode The<br /><span style={{ color: 'var(--oww-red)' }}>Cipher Wheel</span>
           </h2>
           <p className="font-mono text-xs tracking-[0.1em] uppercase"
              style={{ color: 'var(--oww-brown-light)' }}>

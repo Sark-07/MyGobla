@@ -106,7 +106,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
   }, [cipheredWish, wishText, decipherProgress]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start px-4 py-8 anim-breathing-glow"
+    <div className="w-full h-full flex flex-col items-center justify-start px-4 py-8 anim-breathing-glow"
          style={{ backgroundColor: 'var(--oww-black-soft)', minHeight: '100vh' }}>
       
       <div className="max-w-2xl w-full pt-8">
