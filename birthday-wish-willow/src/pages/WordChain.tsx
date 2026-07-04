@@ -107,7 +107,7 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
             {CHAIN.map((link, i) => {
               const isSolved = solvedWords.includes(link.answer);
               const isCurrent = i === currentIndex && !allSolved;
-              const isLocked = i > currentIndex && !allSolved;
+
 
               return (
                 <div key={i} className="flex items-center gap-4 mb-1 last:mb-0">

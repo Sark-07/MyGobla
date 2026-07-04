@@ -4,7 +4,7 @@
 // ══════════════════════════════════════════════════
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { playCipherTick, playSuccessChime, playErrorBuzz, playSparkPop, playRevelationDrone } from '../lib/sfx';
+import { playCipherTick, playSuccessChime, playErrorBuzz, playRevelationDrone } from '../lib/sfx';
 import { whisper } from '../lib/voice';
 import type { ParticleSystem } from '../lib/particles';
 

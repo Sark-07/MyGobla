@@ -93,9 +93,6 @@ export default function SymbolCipher({ onComplete, particles }: SymbolCipherProp
     }
   }, [selectedSymbol, solved]);
 
-  // Get all unique symbols used in the message
-  const messageSymbols = [...new Set(encodedChars.filter((c) => !c.isSpace).map((c) => c.symbol))];
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
          style={{ backgroundColor: 'var(--oww-cream)' }}
