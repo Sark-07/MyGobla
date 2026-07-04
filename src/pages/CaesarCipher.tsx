@@ -3,7 +3,7 @@
 // Interactive cipher wheel to decode a message
 // ══════════════════════════════════════════════════
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { caesarDecipher } from '../lib/ciphers';
 import { playCipherTick, playSuccessChime, playErrorBuzz, playCrackle } from '../lib/sfx';
 import { whisper } from '../lib/voice';
@@ -14,23 +14,27 @@ interface CaesarCipherProps {
   particles: ParticleSystem | null;
 }
 
-const SECRET_MESSAGE = 'HAPPY BIRTHDAY GOBLA';
-const CORRECT_SHIFT = 7;
-const ENCODED = SECRET_MESSAGE.split('').map((ch) => {
-  if (ch === ' ') return ' ';
-  const i = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(ch);
-  return i === -1 ? ch : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[(i + CORRECT_SHIFT) % 26];
-}).join('');
-
+const SECRET_MESSAGE = 'GREAT JOB GOBLA';
+const SOLVED_SUFFIX = ' ⁠♡ GO ON';
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export default function CaesarCipher({ onComplete, particles }: CaesarCipherProps) {
+  const { correctShift, encodedMessage } = useMemo(() => {
+    const shift = Math.floor(Math.random() * 25) + 1; // Random shift 1-25
+    const encoded = SECRET_MESSAGE.split('').map((ch) => {
+      if (ch === ' ') return ' ';
+      const i = ALPHABET.indexOf(ch);
+      return i === -1 ? ch : ALPHABET[(i + shift) % 26];
+    }).join('');
+    return { correctShift: shift, encodedMessage: encoded };
+  }, []);
+
   const [shift, setShift] = useState(0);
   const [solved, setSolved] = useState(false);
   const [shakeKey, setShakeKey] = useState(0);
 
-  const decoded = caesarDecipher(ENCODED, shift);
-  const isCorrect = shift === CORRECT_SHIFT;
+  const decoded = caesarDecipher(encodedMessage, shift);
+  const isCorrect = shift === correctShift;
 
   useEffect(() => {
     whisper('The seals are locked with letters... turn the wheel to break them...');
@@ -42,7 +46,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
       setSolved(true);
       playSuccessChime();
       particles?.burst(window.innerWidth / 2, window.innerHeight / 2, 40, 'spark');
-      setTimeout(() => onComplete(), 1500);
+      setTimeout(() => onComplete(), 4500);
     }
   }, [isCorrect, solved, onComplete, particles]);
 
@@ -54,7 +58,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
 
   const handleWheelClick = (index: number) => {
     changeShift(index);
-    if (index !== CORRECT_SHIFT) {
+    if (index !== correctShift) {
       playErrorBuzz(0.06);
       setShakeKey((k) => k + 1);
     }
@@ -160,15 +164,17 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
           {/* Shift buttons */}
           <div className="flex items-center justify-center gap-3 mb-6">
             <button onClick={() => changeShift(shift - 1)}
+                    disabled={isCorrect}
                     className="font-mono text-lg font-bold w-10 h-10 border-2 flex items-center justify-center
-                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)]"
+                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)] disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ borderColor: 'var(--oww-black)', color: 'var(--oww-black)' }}>
               ←
             </button>
             <div className="flex gap-1 flex-wrap justify-center max-w-xs">
               {Array.from({ length: 26 }, (_, i) => (
                 <button key={i} onClick={() => handleWheelClick(i)}
-                        className={`w-6 h-6 text-[10px] font-mono font-bold border transition-all
+                        disabled={isCorrect}
+                        className={`w-6 h-6 text-[10px] font-mono font-bold border transition-all disabled:opacity-50 disabled:cursor-not-allowed
                           ${i === shift 
                             ? 'bg-[var(--oww-red)] text-[var(--oww-cream)] border-[var(--oww-red)]' 
                             : 'border-[var(--oww-brown-light)] text-[var(--oww-brown-light)] hover:border-[var(--oww-black)] hover:text-[var(--oww-black)]'
@@ -178,8 +184,9 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
               ))}
             </div>
             <button onClick={() => changeShift(shift + 1)}
+                    disabled={isCorrect}
                     className="font-mono text-lg font-bold w-10 h-10 border-2 flex items-center justify-center
-                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)]"
+                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)] disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ borderColor: 'var(--oww-black)', color: 'var(--oww-black)' }}>
               →
             </button>
@@ -196,7 +203,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
             </p>
             <div className="p-3 border-2 border-dashed"
                  style={{ borderColor: 'var(--oww-brown-light)', backgroundColor: 'var(--oww-cream-dark)' }}>
-              <p className="oww-cipher-text text-center break-all">{ENCODED}</p>
+              <p className="oww-cipher-text text-center break-all">{encodedMessage}</p>
             </div>
           </div>
 
@@ -216,7 +223,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
               <p className={`font-mono text-lg font-bold tracking-[0.12em] text-center break-all transition-colors ${
                 solved ? 'text-[var(--oww-gold)] anim-pulse-gold' : 'text-[var(--oww-black)]'
               }`}>
-                {decoded}
+                {decoded}{isCorrect ? SOLVED_SUFFIX : ''}
               </p>
             </div>
           </div>

@@ -69,7 +69,10 @@ export default function App() {
       )}
 
       {showProgress && (
-        <ProgressBar currentLevel={currentLevelFromRoute} completedLevels={state.completedLevels} />
+        <ProgressBar 
+          currentLevel={currentLevelFromRoute - 1} 
+          completedLevels={state.completedLevels.map(c => c - 1).filter(c => c >= 0)} 
+        />
       )}
 
       <div className={`${showProgress ? 'pt-12' : ''} min-h-screen`}>

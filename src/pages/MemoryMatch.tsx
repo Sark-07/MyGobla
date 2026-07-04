@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════
-// Stage 2: MEMORY MATCH — "Make A Wish"
+// Stage 2: MEMORY MATCH — "Mystic Echoes"
 // Flip cards to match pairs of mystical symbols
 // ══════════════════════════════════════════════════
 
@@ -120,7 +120,7 @@ export default function MemoryMatch({ onComplete, particles }: MemoryMatchProps)
         <div className="text-center mb-8 stagger">
           <span className="oww-tag mb-4 inline-block">LEVEL II</span>
           <h2 className="oww-title-lg mb-2" style={{ color: 'var(--oww-black)' }}>
-            Make A <span style={{ color: 'var(--oww-red)' }}>Wish</span>
+            Mystic <span style={{ color: 'var(--oww-red)' }}>Echoes</span>
           </h2>
           <p className="font-mono text-xs tracking-[0.1em] uppercase"
              style={{ color: 'var(--oww-brown-light)' }}>
