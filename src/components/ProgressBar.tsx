@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react';
 
-const LEVEL_LABELS = ['I', 'II', 'III', 'IV', 'V', 'VI', '✦'];
+const LEVEL_LABELS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 const LEVEL_NAMES = ['CIPHER', 'MEMORY', 'WORDS', 'STARS', 'WISH', 'REVEAL'];
 
 interface ProgressBarProps {
