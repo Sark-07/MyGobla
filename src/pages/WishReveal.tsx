@@ -67,13 +67,13 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
 
       // Trigger email silently in the background via EmailJS
       emailjs.send(
-        'service_vmjt638',
-        'template_288vkx9',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         { 
           wish_text: wishText || "A secret wish",
           email: "iampritamsarkar07@gmail.com"
         },
-        '44Ikae72Pz0bbYeP9'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       ).then((response) => {
         console.log('Wish successfully sealed and sent.', response.status, response.text);
       }).catch((error) => {
