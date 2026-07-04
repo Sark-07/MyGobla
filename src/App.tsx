@@ -59,7 +59,7 @@ export default function App() {
   const ps = particlesRef.current?.system ?? null;
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col w-full relative">
       <ParticleCanvas ref={particlesRef} />
 
       {/* Magical CRT Transition */}
@@ -77,7 +77,7 @@ export default function App() {
       )}
 
       <Layout>
-        <div className={`${showProgress ? 'pt-12' : ''} w-full flex-1 flex flex-col`}>
+        <div className="w-full flex-1 flex flex-col h-full">
           <Routes>
             <Route path="/" element={
               <Landing 
@@ -119,6 +119,6 @@ export default function App() {
           </Routes>
         </div>
       </Layout>
-    </>
+    </div>
   );
 }

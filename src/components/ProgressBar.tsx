@@ -24,7 +24,7 @@ export function ProgressBar({ currentLevel, completedLevels }: ProgressBarProps)
   );
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center gap-1 py-2 px-4"
+    <div className="sticky top-0 z-50 flex items-center justify-center gap-1 py-2 px-4 w-full"
          style={{ backgroundColor: 'var(--oww-cream-dark)', borderBottom: '2px solid var(--oww-black)' }}>
       {/* Left label */}
       <span className="hidden sm:inline font-mono text-[9px] font-bold tracking-[0.12em] uppercase mr-2"

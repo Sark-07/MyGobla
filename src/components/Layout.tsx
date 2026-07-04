@@ -27,7 +27,7 @@ export function Layout({ children }: LayoutProps) {
   const isRevealed = state.completedLevels.includes(5);
 
   return (
-    <div className="min-h-screen w-full flex justify-center transition-colors duration-1000" style={{ backgroundColor: 'var(--oww-cream)' }}>
+    <div className="flex-1 h-full w-full flex justify-center transition-colors duration-1000" style={{ backgroundColor: 'var(--oww-cream)' }}>
       {/* Main Container - Removed rigid borders, added subtle shadow and soft edges */}
       <div className="w-full max-w-screen flex flex-col md:flex-row relative z-10 mx-auto max-w-[1600px]">
         
