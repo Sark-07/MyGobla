@@ -290,19 +290,41 @@ body::before {
 .stagger > *:nth-child(7) { animation-delay: 0.7s; }
 .stagger > *:nth-child(8) { animation-delay: 0.8s; }
 
-/* ── Page transition overlay ── */
-.page-transition-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  pointer-events: none;
-  display: flex;
-}
-.page-transition-overlay .half-left,
-.page-transition-overlay .half-right {
+/* ── Magical Curtain Transition ── */
+.curtain {
   flex: 1;
-  background: var(--oww-black);
+  background-color: var(--oww-black);
+  box-shadow: 0 0 50px rgba(0,0,0,0.8);
+  position: relative;
 }
+.curtain-left {
+  border-right: 2px solid var(--oww-gold);
+}
+.curtain-right {
+  border-left: 2px solid var(--oww-gold);
+}
+
+@keyframes curtain-close-left {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes curtain-close-right {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes curtain-open-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes curtain-open-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.curtain-left.closing { animation: curtain-close-left 0.6s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+.curtain-right.closing { animation: curtain-close-right 0.6s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+.curtain-left.opening { animation: curtain-open-left 0.6s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+.curtain-right.opening { animation: curtain-open-right 0.6s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }

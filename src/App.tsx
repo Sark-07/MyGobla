@@ -25,7 +25,7 @@ export default function App() {
   const particlesRef = useRef<ParticleCanvasRef>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const [transitioning, setTransitioning] = useState(false);
+  const [transitionState, setTransitionState] = useState<'idle' | 'closing' | 'opening'>('idle');
   const [audioStarted, setAudioStarted] = useState(false);
 
   const initAudio = useCallback(() => {
@@ -36,15 +36,16 @@ export default function App() {
   }, [audioStarted]);
 
   const goToLevel = useCallback((level: number) => {
-    if (transitioning) return;
-    setTransitioning(true);
+    if (transitionState !== 'idle') return;
+    setTransitionState('closing');
     playTransitionWhoosh();
 
     setTimeout(() => {
       navigate(LEVEL_ROUTES[level] || '/');
-      setTimeout(() => setTransitioning(false), 300);
-    }, 400);
-  }, [navigate, transitioning]);
+      setTransitionState('opening');
+      setTimeout(() => setTransitionState('idle'), 600);
+    }, 600);
+  }, [navigate, transitionState]);
 
   const onLevelComplete = useCallback((level: number) => {
     completeLevel(level);
@@ -60,11 +61,11 @@ export default function App() {
     <>
       <ParticleCanvas ref={particlesRef} />
 
-      {/* Transition overlay */}
-      {transitioning && (
-        <div className="fixed inset-0 z-[1000] flex pointer-events-auto">
-          <div className="flex-1 anim-fade-in" style={{ backgroundColor: 'var(--oww-black)', animationDuration: '0.3s' }} />
-          <div className="flex-1 anim-fade-in" style={{ backgroundColor: 'var(--oww-black)', animationDuration: '0.3s' }} />
+      {/* Magical Curtain Transition */}
+      {transitionState !== 'idle' && (
+        <div className="fixed inset-0 z-[1000] flex pointer-events-auto overflow-hidden">
+          <div className={`curtain curtain-left ${transitionState}`} />
+          <div className={`curtain curtain-right ${transitionState}`} />
         </div>
       )}
 
