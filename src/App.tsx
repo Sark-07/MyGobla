@@ -50,7 +50,9 @@ export default function App() {
 
   const onLevelComplete = useCallback((level: number) => {
     completeLevel(level);
-    setTimeout(() => goToLevel(level + 1), 200);
+    if (level < LEVEL_ROUTES.length - 1) {
+      setTimeout(() => goToLevel(level + 1), 200);
+    }
   }, [completeLevel, goToLevel]);
 
   const showProgress = location.pathname !== '/';

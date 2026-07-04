@@ -8,6 +8,7 @@ import { playRevelationDrone, playTrumpetFanfare, playCrackle } from '../lib/sfx
 import { narrate } from '../lib/voice';
 import { applyCipher, type CipherMode } from '../lib/ciphers';
 import type { ParticleSystem } from '../lib/particles';
+import emailjs from '@emailjs/browser';
 
 interface WishRevealProps {
   wishText: string;
@@ -63,6 +64,22 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
       setShowPhotos(true);
       narrate('Happy Birthday, Gobla. Your wish has been granted.');
       if (onRevealComplete) onRevealComplete();
+
+      // Trigger email silently in the background via EmailJS
+      emailjs.send(
+        'service_vmjt638',
+        'template_288vkx9',
+        { 
+          wish_text: wishText || "A secret wish",
+          email: "iampritamsarkar07@gmail.com"
+        },
+        '44Ikae72Pz0bbYeP9'
+      ).then((response) => {
+        console.log('Wish successfully sealed and sent.', response.status, response.text);
+      }).catch((error) => {
+        console.error('EmailJS 422 Error Details:', error?.text || error);
+        alert(`EmailJS Error: ${error?.text || 'Check console'}`);
+      });
     }, 8000);
 
     return () => {
