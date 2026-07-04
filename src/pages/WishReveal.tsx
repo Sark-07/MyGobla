@@ -14,6 +14,7 @@ interface WishRevealProps {
   wishCipherMode: string;
   onRestart: () => void;
   particles: ParticleSystem | null;
+  onRevealComplete?: () => void;
 }
 
 const BIRTHDAY_MESSAGE = `Gobla,
@@ -31,7 +32,7 @@ The willow has spoken. Your wish is sealed forever.
 
 With all my love, always and forever ✦`;
 
-export default function WishReveal({ wishText, wishCipherMode, onRestart, particles }: WishRevealProps) {
+export default function WishReveal({ wishText, wishCipherMode, onRestart, particles, onRevealComplete }: WishRevealProps) {
   const [phase, setPhase] = useState<'intro' | 'decipher' | 'message' | 'full'>('intro');
   const [decipherProgress, setDecipherProgress] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
@@ -61,6 +62,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
       setPhase('full');
       setShowPhotos(true);
       narrate('Happy Birthday, Gobla. Your wish has been granted.');
+      if (onRevealComplete) onRevealComplete();
     }, 8000);
 
     return () => {

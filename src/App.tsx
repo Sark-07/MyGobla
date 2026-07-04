@@ -77,7 +77,7 @@ export default function App() {
       )}
 
       <Layout>
-        <div className={`${showProgress ? 'pt-12' : ''} h-full flex flex-col`}>
+        <div className={`${showProgress ? 'pt-12' : ''} w-full flex-1 flex flex-col`}>
           <Routes>
             <Route path="/" element={
               <Landing 
@@ -113,7 +113,7 @@ export default function App() {
             } />
             <Route path="/reveal" element={
               isLevelUnlocked(6)
-                ? <WishReveal wishText={state.wishText} wishCipherMode={state.wishCipherMode} onRestart={() => { resetGame(); navigate('/'); }} particles={ps} />
+                ? <WishReveal wishText={state.wishText} wishCipherMode={state.wishCipherMode} onRestart={() => { resetGame(); navigate('/'); }} particles={ps} onRevealComplete={() => onLevelComplete(6)} />
                 : <Navigate to="/" replace />
             } />
           </Routes>

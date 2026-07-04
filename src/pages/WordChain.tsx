@@ -79,7 +79,7 @@ export default function WordChain({ onComplete, particles }: WordChainProps) {
   }, [input, currentIndex, onComplete, particles]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center px-4 py-16"
+    <div className="w-full flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-8 overflow-hidden"
          style={{ backgroundColor: 'var(--oww-cream)' }}>
       
       <div className="max-w-xl w-full">

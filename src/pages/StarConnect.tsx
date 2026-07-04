@@ -161,7 +161,7 @@ export default function StarConnect({ onComplete, particles }: StarConnectProps)
         {/* Header */}
         <div className="text-center mb-6 stagger">
           <span className="oww-tag mb-4 inline-block"
-                style={{ backgroundColor: 'var(--oww-black)', borderColor: 'var(--oww-brown-light)' }}>
+                style={{ backgroundColor: 'var(--oww-black)', borderColor: 'var(--oww-gold)', color: 'var(--oww-gold)' }}>
             LEVEL IV
           </span>
           <h2 className="oww-title-lg mb-2" style={{ color: 'var(--oww-cream)' }}>

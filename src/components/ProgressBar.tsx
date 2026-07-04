@@ -73,7 +73,7 @@ export function ProgressBar({ currentLevel, completedLevels }: ProgressBarProps)
       {/* Right label */}
       <span className="hidden sm:inline font-mono text-[9px] font-bold tracking-[0.12em] uppercase ml-2"
             style={{ color: 'var(--oww-brown-light)' }}>
-        ★ GOBLA
+        GOBLA
       </span>
     </div>
   );

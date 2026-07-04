@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGameState } from '../hooks/useGameState';
 
@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen w-full flex justify-center" style={{ backgroundColor: 'var(--oww-cream)' }}>
       {/* Main Container */}
-      <div className="w-full max-w-[1600px] flex flex-col md:flex-row relative z-10"
+      <div className="w-full max-w-screen flex flex-col md:flex-row relative z-10"
            style={{ borderLeft: hideSidebars ? 'none' : '2px solid var(--oww-black)', borderRight: hideSidebars ? 'none' : '2px solid var(--oww-black)' }}>
         
         {/* LEFT COLUMN */}
@@ -104,7 +104,7 @@ export function Layout({ children }: LayoutProps) {
 
         {/* CENTER COLUMN */}
         <main className="flex-1 flex flex-col relative min-w-0" style={{ backgroundColor: 'var(--oww-cream)' }}>
-          <div className="flex-1 flex flex-col overflow-y-auto">
+          <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
             <div className="flex-1 flex flex-col items-center justify-center relative">
               {children}
             </div>
