@@ -6,62 +6,131 @@ interface LayoutProps {
   children: ReactNode;
 }
 
+const ROUTE_DATA: Record<string, { title: string, verse: string, resonance: number }> = {
+  '/': { title: 'THE ARRIVAL', verse: 'A soul arrives, seeking the willow’s blessing...', resonance: 0 },
+  '/cipher': { title: 'THE FIRST SEAL', verse: 'The wheel spins. The first seal awaits your touch.', resonance: 20 },
+  '/memory': { title: 'ECHOES OF TIME', verse: 'Fragments of the past align. Memories merge into one.', resonance: 40 },
+  '/chain': { title: 'THE BINDING', verse: 'The chain of fate. Ignite the branches with your words.', resonance: 60 },
+  '/stars': { title: 'CONSTELLATIONS', verse: 'The stars hold secrets written in the dark.', resonance: 80 },
+  '/wish-machine': { title: 'THE OFFERING', verse: 'The final trial. Speak your heart into the void.', resonance: 99 },
+  '/reveal': { title: 'THE AWAKENING', verse: 'The willow has spoken. Your wish is sealed forever.', resonance: 100 },
+};
+
 export function Layout({ children }: LayoutProps) {
   const { state } = useGameState();
   const location = useLocation();
 
   const isLanding = location.pathname === '/';
-  
-  // Do not show sidebars on these specific pages
   const hideSidebars = isLanding || location.pathname === '/stars' || location.pathname === '/reveal';
-
+  
+  const currentData = ROUTE_DATA[location.pathname] || ROUTE_DATA['/'];
   const isRevealed = state.completedLevels.includes(5);
 
   return (
-    <div className="min-h-screen w-full flex justify-center" style={{ backgroundColor: 'var(--oww-cream)' }}>
-      {/* Main Container */}
-      <div className="w-full max-w-screen flex flex-col md:flex-row relative z-10"
-           style={{ borderLeft: hideSidebars ? 'none' : '2px solid var(--oww-black)', borderRight: hideSidebars ? 'none' : '2px solid var(--oww-black)' }}>
+    <div className="min-h-screen w-full flex justify-center transition-colors duration-1000" style={{ backgroundColor: 'var(--oww-cream)' }}>
+      {/* Main Container - Removed rigid borders, added subtle shadow and soft edges */}
+      <div className="w-full max-w-screen flex flex-col md:flex-row relative z-10 mx-auto max-w-[1600px]">
         
-        {/* LEFT COLUMN */}
+        {/* LEFT COLUMN: THE CHRONICLE */}
         {!hideSidebars && (
-          <aside className="hidden md:flex flex-col w-[280px] lg:w-[320px] flex-shrink-0"
-                 style={{ borderRight: '2px solid var(--oww-black)', backgroundColor: 'var(--oww-cream-light)' }}>
-            <div className="p-4 border-b-2" style={{ borderColor: 'var(--oww-black)' }}>
-              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4"
+          <aside className="hidden md:flex flex-col w-[280px] lg:w-[320px] flex-shrink-0 px-6 py-12 anim-fade-in"
+                 style={{ borderRight: '1px dashed rgba(139, 69, 19, 0.2)' }}>
+            
+            <div className="mb-12">
+              <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-4"
                  style={{ color: 'var(--oww-brown-light)' }}>
-                THE WILLOW'S CHRONICLE · SACRED ARCHIVE
+                THE CHRONICLE OF GOBLA
               </p>
               
-              {/* Image Placeholder */}
-              <div className="w-full aspect-[3/4] border-2 relative overflow-hidden mb-6 group"
-                   style={{ borderColor: 'var(--oww-black)', backgroundColor: 'var(--oww-black)' }}>
+              {/* Aura Imprint Placeholder */}
+              <div className="w-full aspect-[3/4] relative overflow-hidden mb-6 group rounded-sm"
+                   style={{ backgroundColor: 'var(--oww-black)', boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)' }}>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                  <span className="text-4xl mb-4 anim-pulse-gold" style={{ color: 'var(--oww-gold)' }}>✦</span>
-                  <p className="font-mono text-[10px] tracking-[0.1em] uppercase"
+                  <span className="text-4xl mb-4 anim-pulse-gold transition-all duration-700" 
+                        style={{ color: currentData.resonance > 50 ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }}>
+                    ✦
+                  </span>
+                  <p className="font-mono text-[9px] tracking-[0.15em] uppercase"
                      style={{ color: 'var(--oww-brown-light)' }}>
-                    AWAITING SOUL IMPRINT
+                    AURA IMPRESSION<br/>AWAITING MANIFESTATION
                   </p>
                 </div>
                 
-                {/* Decorative photo corners */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 m-2" style={{ borderColor: 'var(--oww-brown-light)' }} />
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 m-2" style={{ borderColor: 'var(--oww-brown-light)' }} />
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 m-2" style={{ borderColor: 'var(--oww-brown-light)' }} />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 m-2" style={{ borderColor: 'var(--oww-brown-light)' }} />
-                
-                {/* Glitch overlay line */}
-                <div className="absolute left-0 right-0 h-[2px] bg-white opacity-20"
-                     style={{ top: '50%', animation: 'scanline 8s linear infinite' }} />
+                {/* Mystical soft glow based on progress */}
+                <div className="absolute inset-0 opacity-30 transition-opacity duration-1000"
+                     style={{ 
+                       background: `radial-gradient(circle at center, var(--oww-gold) 0%, transparent ${currentData.resonance}%)` 
+                     }} />
               </div>
 
-              <p className="font-mono text-[9px] tracking-[0.15em] uppercase text-center mb-2"
-                 style={{ color: 'var(--oww-red)' }}>
-                RECORD I — AURA MANIFESTATION — SOUL #0042
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-mono text-[9px] tracking-[0.2em] uppercase" style={{ color: 'var(--oww-brown-light)' }}>
+                  CHAPTER
+                </span>
+                <span className="font-mono text-[9px] font-bold tracking-[0.2em]" style={{ color: 'var(--oww-black)' }}>
+                  {currentData.title}
+                </span>
+              </div>
+            </div>
+
+            {/* Dynamic Poetry */}
+            <div className="flex-1 flex flex-col justify-start">
+              <div className="relative pl-4 border-l border-dotted" style={{ borderColor: 'var(--oww-brown-light)' }}>
+                <span className="absolute -left-[5px] top-0 text-[10px]" style={{ color: 'var(--oww-gold)' }}>✦</span>
+                <p className="font-display text-lg italic leading-relaxed transition-all duration-700"
+                   style={{ color: 'var(--oww-black)' }}>
+                  "{currentData.verse}"
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-auto pt-6 flex justify-center opacity-70">
+              <span className="font-mono text-[9px] tracking-[0.3em] uppercase"
+                    style={{ color: 'var(--oww-brown-light)' }}>
+                • DESTINY WOVEN •
+              </span>
+            </div>
+          </aside>
+        )}
+
+        {/* CENTER COLUMN: THE PUZZLE */}
+        <main className="flex-1 flex flex-col relative min-w-0">
+          <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
+            <div className="flex-1 flex flex-col items-center justify-center relative">
+              {children}
+            </div>
+          </div>
+        </main>
+
+        {/* RIGHT COLUMN: RESONANCE METRICS */}
+        {!hideSidebars && (
+          <aside className="hidden lg:flex flex-col w-[280px] xl:w-[320px] flex-shrink-0 px-6 py-12 anim-fade-in"
+                 style={{ borderLeft: '1px dashed rgba(139, 69, 19, 0.2)' }}>
+            
+            <div className="mb-8">
+              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right"
+                 style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}>
+                READ THE ANCIENT RUNES →
+              </p>
+              
+              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right"
+                 style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}>
+                THE WILLOW'S PRICE →
               </p>
             </div>
 
-            <div className="p-4 flex-1 flex flex-col gap-4 font-mono text-[10px] tracking-[0.1em] uppercase"
+            <div className="mb-12 text-right">
+              <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-2"
+                 style={{ color: 'var(--oww-brown-light)' }}>
+                SOUL RESONANCE
+              </p>
+              <div className="font-display text-5xl transition-all duration-1000"
+                   style={{ color: currentData.resonance === 100 ? 'var(--oww-gold)' : 'var(--oww-black)' }}>
+                {currentData.resonance}%
+              </div>
+            </div>
+
+            <div className="mb-12 flex flex-col gap-4 font-mono text-[10px] tracking-[0.1em] uppercase"
                  style={{ color: 'var(--oww-brown)' }}>
               <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
                 <span>DESTINY · REF:</span>
@@ -70,6 +139,10 @@ export function Layout({ children }: LayoutProps) {
               <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
                 <span>WISH MAKER:</span>
                 <span className="font-bold">GOBLA</span>
+              </div>
+              <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
+                <span>SOUL INCEPTION:</span>
+                <span className="font-bold">18 JULY 2001</span>
               </div>
               <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
                 <span>RITUAL DATE:</span>
@@ -91,103 +164,31 @@ export function Layout({ children }: LayoutProps) {
                   MYSTICAL
                 </span>
               </div>
-
-              <div className="mt-auto pt-6 flex justify-center opacity-60">
-                <span className="oww-stamp text-[12px] py-1 px-3"
-                      style={{ color: 'var(--oww-red)', borderColor: 'var(--oww-red)', transform: 'rotate(-5deg)' }}>
-                  ETERNAL BOND
-                </span>
-              </div>
             </div>
-          </aside>
-        )}
 
-        {/* CENTER COLUMN */}
-        <main className="flex-1 flex flex-col relative min-w-0" style={{ backgroundColor: 'var(--oww-cream)' }}>
-          <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
-            <div className="flex-1 flex flex-col items-center justify-center relative">
-              {children}
+            <div className="mb-4">
+              <p className="font-mono text-[9px] tracking-[0.15em] uppercase text-right"
+                 style={{ color: 'var(--oww-red)' }}>
+                RECORD I — AURA MANIFESTATION — SOUL #0042
+              </p>
             </div>
-          </div>
-        </main>
 
-        {/* RIGHT COLUMN */}
-        {!hideSidebars && (
-          <aside className="hidden lg:flex flex-col w-[280px] xl:w-[320px] flex-shrink-0"
-                 style={{ borderLeft: '2px solid var(--oww-black)', backgroundColor: 'var(--oww-cream-light)' }}>
-            <div className="p-6">
-              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-8 pb-4 border-b-2"
-                 style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-black)' }}>
-                READ THE ANCIENT RUNES →
+            <div className="mb-8 flex justify-end gap-4">
+              <span className="oww-stamp text-[10px] py-1 px-2 opacity-60"
+                    style={{ color: 'var(--oww-red)', borderColor: 'var(--oww-red)', transform: 'rotate(-5deg)' }}>
+                ETERNAL BOND
+              </span>
+              <span className="oww-stamp text-[10px] py-1 px-2 opacity-80"
+                    style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(2deg)' }}>
+                AURA LEVEL 10000++
+              </span>
+            </div>
+
+            <div className="mt-auto pt-8 border-t border-dotted" style={{ borderColor: 'var(--oww-brown-light)' }}>
+              <p className="font-display text-sm italic text-right leading-relaxed"
+                 style={{ color: 'var(--oww-brown)' }}>
+                "In every puzzle, a piece of your spirit is reflected back to the world."
               </p>
-              
-              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-8 pb-4 border-b-2"
-                 style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-black)' }}>
-                THE WILLOW'S PRICE →
-              </p>
-
-              <div className="mb-8">
-                <p className="font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b-2"
-                   style={{ color: 'var(--oww-black)', borderColor: 'var(--oww-black)' }}>
-                  MAGICAL AFFINITIES
-                </p>
-                
-                <div className="space-y-4 font-mono text-[10px] tracking-[0.1em] uppercase">
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>SOUL RESONANCE</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>HARMONIC</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>WISH CAPACITY</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>SINGULAR</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>MAGIC THREADS</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>WOVEN</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>CELESTIAL ALIGNMENT</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>TRUE</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>DREAM RETENTION</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>PERFECT</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>CLASSIFICATION</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>SACRED / BOUND</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-8">
-                <span className="oww-stamp text-[10px] py-1 px-2 opacity-80"
-                      style={{ color: 'var(--oww-gold)', borderColor: 'var(--oww-gold)', transform: 'rotate(2deg)' }}>
-                  AURA LEVEL 10000++
-                </span>
-              </div>
-
-              <div className="pt-8 border-t-2" style={{ borderColor: 'var(--oww-black)' }}>
-                <p className="font-mono text-[11px] font-bold tracking-[0.15em] uppercase mb-4"
-                   style={{ color: 'var(--oww-black)' }}>
-                  ETERNAL CONNECTIONS
-                </p>
-                
-                <div className="space-y-4 font-mono text-[10px] tracking-[0.1em] uppercase">
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>HEARTBEAT</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>SYNCED →</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>MEMORIES</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>CHERISHED →</p>
-                  </div>
-                  <div>
-                    <p style={{ color: 'var(--oww-brown-light)' }}>DESTINY</p>
-                    <p className="font-bold" style={{ color: 'var(--oww-black)' }}>SEALED →</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </aside>
         )}
