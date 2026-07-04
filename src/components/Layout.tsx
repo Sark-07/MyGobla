@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGameState } from '../hooks/useGameState';
 
@@ -19,6 +19,14 @@ const ROUTE_DATA: Record<string, { title: string, verse: string, resonance: numb
 export function Layout({ children }: LayoutProps) {
   const { state } = useGameState();
   const location = useLocation();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   const isLanding = location.pathname === '/';
   const hideSidebars = isLanding || location.pathname === '/stars' || location.pathname === '/reveal';
@@ -95,7 +103,7 @@ export function Layout({ children }: LayoutProps) {
 
         {/* CENTER COLUMN: THE PUZZLE */}
         <main className="flex-1 flex flex-col relative min-w-0">
-          <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
+          <div ref={scrollRef} className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
             <div className="flex-1 flex flex-col items-center justify-center relative">
               {children}
             </div>
@@ -108,14 +116,14 @@ export function Layout({ children }: LayoutProps) {
                  style={{ borderLeft: '1px dashed rgba(139, 69, 19, 0.2)' }}>
             
             <div className="mb-8">
-              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right"
+              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right pr-2"
                  style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}>
-                READ THE ANCIENT RUNES →
+                THE PATH TO AWAKENING ✦
               </p>
               
-              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right"
+              <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right pr-2"
                  style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}>
-                THE WILLOW'S PRICE →
+                THE WILLOW'S PROMISE ✦
               </p>
             </div>
 
