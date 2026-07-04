@@ -21,11 +21,11 @@ const BIRTHDAY_MESSAGE = `Gobla,
 From the moment you opened this box, you embarked on a journey — 
 through ciphers, symbols, and words — all leading here, to this moment.
 
-Every puzzle was a piece of you. The spark, the heart, the dream, the magic.
+Every puzzle was a piece of you. The spark, the heart, the dream, the love.
 
 You are extraordinary. You are loved. You are the wish that came true.
 
-Happy Birthday, Gobla.
+Happy Birthday, My Gobla.
 
 The willow has spoken. Your wish is sealed forever.
 

@@ -151,7 +151,11 @@ export default function WishCipher({ onComplete, particles }: WishCipherProps) {
                 className="w-full font-mono text-sm font-bold tracking-[0.04em]
                            px-4 py-3 border-2 bg-[var(--oww-cream-light)] outline-none resize-none
                            transition-colors focus:border-[var(--oww-red)]"
-                style={{ borderColor: 'var(--oww-brown-light)', color: 'var(--oww-black)' }}
+                style={{ 
+                  WebkitTextSecurity: 'disc',
+                  borderColor: 'var(--oww-brown-light)', 
+                  color: 'var(--oww-black)' 
+                } as any}
               />
               <p className="font-mono text-[10px] text-right mt-1"
                  style={{ color: 'var(--oww-brown-light)' }}>
