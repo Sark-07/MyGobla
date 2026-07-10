@@ -4,7 +4,7 @@
 // ══════════════════════════════════════════════════
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { playRevelationDrone, playTrumpetFanfare, playCrackle } from '../lib/sfx';
+import { playTrumpetFanfare, playCrackle } from '../lib/sfx';
 import { narrate } from '../lib/voice';
 import { applyCipher, type CipherMode } from '../lib/ciphers';
 import type { ParticleSystem } from '../lib/particles';
@@ -38,7 +38,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
   const [phase, setPhase] = useState<'intro' | 'decipher' | 'message' | 'full'>('intro');
   const [decipherProgress, setDecipherProgress] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
-  const [showPhotos, setShowPhotos] = useState(false);
+
   const messageRef = useRef<HTMLDivElement>(null);
   const hasStartedTyping = useRef(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -81,7 +81,6 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     const fullPhaseDelay = 6000 + (BIRTHDAY_MESSAGE.length * 50) + 2000;
     const timer4 = setTimeout(() => {
       setPhase('full');
-      setShowPhotos(true);
       if (onRevealComplete) onRevealComplete();
 
       // Trigger email silently in the background via EmailJS
