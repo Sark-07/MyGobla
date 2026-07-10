@@ -18,16 +18,17 @@ interface WishRevealProps {
   onRevealComplete?: () => void;
 }
 
-const BIRTHDAY_MESSAGE = `Gobla,
+const BIRTHDAY_MESSAGE = `I still remember seeing you on March 11th, 2025 at 1:33 PM—a person so jolly, charming, and full of life. You quickly became a very good, and then a very close, friend of mine. I slowly realized just how beautifully different you are, and how uniquely you see the world. You showed me that there is so much more to life than just work.
 
-From the moment you opened this box, you embarked on a journey — 
-through ciphers, symbols, and words — all leading here, to this moment.
+When I felt low, you stayed. You listened. You brought emotions with you—emotions I hadn't understood in all my 25 years of life. In such a short amount of time, you have taught me so many things about life itself, what it means to truly live. You make me smile; You make my days brighter.
 
-Every puzzle was a piece of you. The spark, the heart, the dream, the love.
+So, the moment you opened this box, you embarked on a journey—through ciphers, symbols, and words—all leading here, to this moment. This is just my small way of trying to make something beautiful for you, with love.
 
-You are extraordinary. You are loved. You are the wish that came true. I'm so proud of you.
+Every puzzle was a piece of you: the spark, the heart, the dream, the love.
 
-Happy Birthday, My Gobla.
+You are extraordinary. You are loved. You are the wish that came true. I am so proud of you, and you are doing fantastic.
+
+Happy Birthday, my Gobla.
 
 The willow has spoken. Your wish is sealed forever.
 
@@ -39,14 +40,25 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
   const [typedChars, setTypedChars] = useState(0);
   const [showPhotos, setShowPhotos] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
+  const hasStartedTyping = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const cipheredWish = wishText ? applyCipher(wishText, wishCipherMode as CipherMode) : '';
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
 
   // Phase progression
   useEffect(() => {
     // Intro phase
-    playRevelationDrone(5, 0.06);
-    playCrackle(3, 0.04);
+    playRevelationDrone(10, 0.05);
+    playCrackle(10, 0.04);
 
     const timer1 = setTimeout(() => {
       setPhase('decipher');
@@ -54,12 +66,16 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     }, 2000);
 
     const timer2 = setTimeout(() => {
-      setPhase('message');
+      // Play trumpet but do NOT start message yet
       playTrumpetFanfare(0.1);
-      particles?.start('star', 2);
     }, 6000);
 
     const timer3 = setTimeout(() => {
+      setPhase('message');
+      particles?.start('star', 2);
+    }, 8500);
+
+    const timer4 = setTimeout(() => {
       setPhase('full');
       setShowPhotos(true);
       narrate('Happy Birthday, Gobla. Your wish has been granted.');
@@ -80,19 +96,21 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
         console.error('EmailJS 422 Error Details:', error?.text || error);
         alert(`EmailJS Error: ${error?.text || 'Check console'}`);
       });
-    }, 8000);
+    }, 13000);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
+      clearTimeout(timer4);
       particles?.stop();
     };
   }, [particles]);
 
   // Decipher animation — gradually reveal plain text
   useEffect(() => {
-    if (phase !== 'decipher' || !cipheredWish) return;
+    if (phase !== 'decipher' && phase !== 'message' && phase !== 'full') return;
+    if (!cipheredWish) return;
     const interval = setInterval(() => {
       setDecipherProgress((p) => {
         if (p >= 100) { clearInterval(interval); return 100; }
@@ -102,16 +120,29 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     return () => clearInterval(interval);
   }, [phase, cipheredWish]);
 
-  // Typewriter effect for birthday message
+  // Typewriter effect for birthday message + khat.mp3
   useEffect(() => {
     if (phase !== 'message' && phase !== 'full') return;
+    if (hasStartedTyping.current) return;
+    hasStartedTyping.current = true;
+
+    audioRef.current = new Audio('/mp3/khat.mp3');
+    audioRef.current.volume = 0.5;
+    audioRef.current.play().catch(e => console.error('Audio play failed:', e));
+
     const interval = setInterval(() => {
       setTypedChars((c) => {
-        if (c >= BIRTHDAY_MESSAGE.length) { clearInterval(interval); return c; }
+        if (c >= BIRTHDAY_MESSAGE.length) { 
+          clearInterval(interval); 
+          return c; 
+        }
         return c + 1;
       });
-    }, 35);
-    return () => clearInterval(interval);
+    }, 50);
+    
+    return () => {
+      clearInterval(interval);
+    };
   }, [phase]);
 
   // Build partially deciphered text
