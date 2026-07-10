@@ -128,11 +128,13 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     if (hasStartedTyping.current) return;
     hasStartedTyping.current = true;
 
-    const startTypingTimer = setTimeout(() => {
+    const startAudioTimer = setTimeout(() => {
       audioRef.current = new Audio('/mp3/khat.mp3');
       audioRef.current.volume = 0.5;
       audioRef.current.play().catch(e => console.error('Audio play failed:', e));
+    }, 1000); // Starts 500ms before the typing
 
+    const startTypingTimer = setTimeout(() => {
       const interval = setInterval(() => {
         setTypedChars((c) => {
           if (c >= BIRTHDAY_MESSAGE.length) { 
@@ -143,16 +145,12 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
         });
       }, 50);
 
-      // Store interval ID on the ref or just let it leak slightly if phase unmounts,
-      // but better to clean it up properly by attaching to a ref if we wanted perfectly clean unmounts.
-      // For this isolated timeout, we can't easily return the interval cleanup, 
-      // but the component unmount handles Audio cleanup.
-      
       // We will attach interval to a global or ref to clear it if needed.
       (window as any)._typingInterval = interval;
     }, 1500);
     
     return () => {
+      clearTimeout(startAudioTimer);
       clearTimeout(startTypingTimer);
       if ((window as any)._typingInterval) {
         clearInterval((window as any)._typingInterval);
