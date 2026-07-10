@@ -46,7 +46,7 @@ export default function WishCipher({ onComplete, particles }: WishCipherProps) {
     setTimeout(() => {
       setCracking(true);
       playSnap(0.3);
-      playRevelationDrone(3, 0.06);
+      playRevelationDrone(5, 0.06);
       particles?.burst(window.innerWidth / 2, window.innerHeight / 2, 60, 'spark');
       
       setTimeout(() => {

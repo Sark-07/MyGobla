@@ -14,8 +14,8 @@ interface CaesarCipherProps {
   particles: ParticleSystem | null;
 }
 
-const SECRET_MESSAGE = 'GREAT JOB GOBLA';
-const SOLVED_SUFFIX = ' ⁠♡ GO ON';
+const SECRET_MESSAGE = 'LIFE IS FLEETING BUT YOU ARE DOING AMAZING';
+const SOLVED_SUFFIX = ' ✦ KEEP GOING';
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export default function CaesarCipher({ onComplete, particles }: CaesarCipherProps) {
@@ -68,7 +68,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
     <div className="w-full h-full flex flex-col items-center justify-center px-4 py-16"
       style={{ backgroundColor: 'var(--oww-cream)' }}>
 
-      <div className="max-w-xl w-full">
+      <div className="max-w-2xl w-full">
         {/* Header */}
         <div className="text-center mb-8 stagger">
           <span className="oww-tag mb-4 inline-block">LEVEL I</span>
@@ -166,7 +166,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
             <button onClick={() => changeShift(shift - 1)}
               disabled={isCorrect}
               className="font-mono text-lg font-bold w-10 h-10 border-2 flex items-center justify-center
-                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)] disabled:opacity-50 disabled:cursor-not-allowed"
+                               transition-all hover:bg-black/5 active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ borderColor: 'var(--oww-black)', color: 'var(--oww-black)' }}>
               ←
             </button>
@@ -174,7 +174,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
               {Array.from({ length: 26 }, (_, i) => (
                 <button key={i} onClick={() => handleWheelClick(i)}
                   disabled={isCorrect}
-                  className={`w-6 h-6 text-[10px] font-mono font-bold border transition-all disabled:opacity-50 disabled:cursor-not-allowed
+                  className={`w-6 h-6 text-[10px] font-mono font-bold border transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
                           ${i === shift
                       ? 'bg-[var(--oww-red)] text-[var(--oww-cream)] border-[var(--oww-red)]'
                       : 'border-[var(--oww-brown-light)] text-[var(--oww-brown-light)] hover:border-[var(--oww-black)] hover:text-[var(--oww-black)]'
@@ -186,7 +186,7 @@ export default function CaesarCipher({ onComplete, particles }: CaesarCipherProp
             <button onClick={() => changeShift(shift + 1)}
               disabled={isCorrect}
               className="font-mono text-lg font-bold w-10 h-10 border-2 flex items-center justify-center
-                               transition-colors hover:bg-[var(--oww-black)] hover:text-[var(--oww-cream)] disabled:opacity-50 disabled:cursor-not-allowed"
+                               transition-all hover:bg-black/5 active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ borderColor: 'var(--oww-black)', color: 'var(--oww-black)' }}>
               →
             </button>

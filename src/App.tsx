@@ -60,6 +60,9 @@ export default function App() {
 
   const ps = particlesRef.current?.system ?? null;
 
+  // Show audio gate on non-landing pages when audio hasn't been unlocked yet
+  const needsAudioGate = !audioStarted && location.pathname !== '/';
+
   return (
     <div className="min-h-screen flex flex-col w-full relative">
       <ParticleCanvas ref={particlesRef} />
@@ -68,6 +71,34 @@ export default function App() {
       {transitionState !== 'idle' && (
         <div className={`crt-overlay ${transitionState}`}>
           <div className="crt-screen" />
+        </div>
+      )}
+
+      {/* Global Audio Unlock Gate */}
+      {needsAudioGate && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center"
+             style={{ backgroundColor: 'var(--oww-black-soft)' }}>
+          <p className="font-mono text-xs tracking-[1em] mb-8 anim-flicker"
+             style={{ color: 'var(--oww-gold)' }}>
+            ✦ ✦ ✦
+          </p>
+          <p className="font-mono text-sm tracking-[0.15em] uppercase mb-4 anim-fade-in"
+             style={{ color: 'var(--oww-cream-dark)' }}>
+            THE WILLOW AWAITS YOUR PRESENCE
+          </p>
+          <p className="font-mono text-[9px] tracking-[0.1em] uppercase mb-12 anim-fade-in"
+             style={{ color: 'var(--oww-brown-light)', opacity: 0.5, animationDelay: '0.5s' }}>
+            SOUND IS RECOMMENDED
+          </p>
+          <button onClick={initAudio}
+                  className="font-mono text-xs tracking-[0.2em] uppercase px-8 py-4 border-2 transition-all cursor-pointer hover:bg-[var(--oww-gold)] hover:text-[var(--oww-black)] active:scale-95 anim-pulse-gold"
+                  style={{ 
+                    borderColor: 'var(--oww-gold)', 
+                    color: 'var(--oww-gold)',
+                    backgroundColor: 'transparent',
+                  }}>
+            ✦ TOUCH TO AWAKEN ✦
+          </button>
         </div>
       )}
 
@@ -124,3 +155,4 @@ export default function App() {
     </div>
   );
 }
+

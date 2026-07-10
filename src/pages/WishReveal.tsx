@@ -57,8 +57,8 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
   // Phase progression
   useEffect(() => {
     // Intro phase
-    playRevelationDrone(10, 0.05);
-    playCrackle(10, 0.04);
+    // playRevelationDrone(4, 0.05);
+    playCrackle(8, 0.01);
 
     const timer1 = setTimeout(() => {
       setPhase('decipher');
@@ -66,19 +66,22 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     }, 2000);
 
     const timer2 = setTimeout(() => {
-      // Play trumpet but do NOT start message yet
-      playTrumpetFanfare(0.1);
-    }, 6000);
+      // Play trumpet
+      playTrumpetFanfare(0.12);
+    }, 3500);
 
     const timer3 = setTimeout(() => {
       setPhase('message');
       particles?.start('star', 2);
-    }, 8500);
+      narrate('Happy Birthday, Gobla. Your wish has been granted.');
+    }, 4500);
 
+    // Wait for the typewriter to finish: message starts at 4.5s, types at 50ms/char
+    // BIRTHDAY_MESSAGE.length * 50ms + 4500ms start delay + 2s buffer
+    const fullPhaseDelay = 4500 + (BIRTHDAY_MESSAGE.length * 50) + 2000;
     const timer4 = setTimeout(() => {
       setPhase('full');
       setShowPhotos(true);
-      narrate('Happy Birthday, Gobla. Your wish has been granted.');
       if (onRevealComplete) onRevealComplete();
 
       // Trigger email silently in the background via EmailJS
@@ -96,7 +99,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
         console.error('EmailJS 422 Error Details:', error?.text || error);
         alert(`EmailJS Error: ${error?.text || 'Check console'}`);
       });
-    }, 13000);
+    }, fullPhaseDelay);
 
     return () => {
       clearTimeout(timer1);
@@ -161,6 +164,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
       
       <div className="max-w-2xl w-full pt-8">
         
+
         {/* ── Phase: Intro ── */}
         {phase === 'intro' && (
           <div className="text-center anim-fade-in" style={{ animationDuration: '1.5s' }}>
@@ -224,6 +228,14 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
                   }}>
                 Gobla
               </h1>
+              <p className="font-mystical text-xl sm:text-2xl mt-3 anim-fade-in"
+                 style={{ 
+                   color: 'var(--oww-cream)',
+                   opacity: 0.85,
+                   animationDelay: '0.5s',
+                 }}>
+              ✦ Happy Birthday ✦
+              </p>
               <div className="oww-divider my-6" style={{ backgroundColor: 'var(--oww-gold)', opacity: 0.3 }} />
             </div>
 
@@ -247,39 +259,51 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
               </p>
             </div>
 
-            {/* ── Photo Gallery (Placeholders) ── */}
-            {showPhotos && (
-              <div className="grid grid-cols-3 gap-3 mb-8 anim-fade-in-up" style={{ animationDelay: '0.5s' }}>
-                {[1, 2, 3].map((n) => (
-                  <div key={n}
-                       className="aspect-[3/4] border-2 flex flex-col items-center justify-center p-3 relative overflow-hidden group"
-                       style={{ 
-                         borderColor: 'var(--oww-cream-dark)',
-                         backgroundColor: 'rgba(241,231,207,0.08)',
-                       }}>
-                    {/* Placeholder content */}
-                    <div className="text-center">
-                      <p className="text-2xl mb-2" style={{ color: 'var(--oww-gold)' }}>✦</p>
-                      <p className="font-mono text-[9px] tracking-[0.1em] uppercase"
-                         style={{ color: 'var(--oww-brown-light)' }}>
-                        PHOTO {n}
-                      </p>
-                      <p className="font-mono text-[8px] mt-1"
-                         style={{ color: 'var(--oww-brown-light)', opacity: 0.6 }}>
-                        Place Gobla's<br/>photo here
-                      </p>
-                    </div>
-                    {/* Corner decorations */}
-                    <div className="absolute top-1 left-1 w-2 h-2 border-t border-l"
-                         style={{ borderColor: 'var(--oww-gold)' }} />
-                    <div className="absolute top-1 right-1 w-2 h-2 border-t border-r"
-                         style={{ borderColor: 'var(--oww-gold)' }} />
-                    <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l"
-                         style={{ borderColor: 'var(--oww-gold)' }} />
-                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r"
-                         style={{ borderColor: 'var(--oww-gold)' }} />
-                  </div>
-                ))}
+            {/* ── Photo Gallery ── */}
+            {typedChars >= BIRTHDAY_MESSAGE.length && (
+              <div className="grid grid-cols-3 gap-4 mb-8 anim-fade-in-up">
+                {/* Left Card */}
+                <div className="relative overflow-hidden border-2 aspect-[3/4]"
+                     style={{ borderColor: 'var(--oww-gold)' }}>
+                  <img src="https://res.cloudinary.com/dvbp1coaw/image/upload/v1783704961/IMG20251228124643_rnzopg.jpg"
+                       alt="Memory 1"
+                       className="w-full h-full object-cover"
+                       style={{ filter: 'sepia(0.15) contrast(1.05)' }} />
+                  {/* Corner decorations */}
+                  <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute top-1 right-1 w-3 h-3 border-t-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 left-1 w-3 h-3 border-b-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,26,26,0.4) 0%, transparent 40%)' }} />
+                </div>
+
+                {/* Middle Card */}
+                <div className="relative overflow-hidden border-2 aspect-[3/4]"
+                     style={{ borderColor: 'var(--oww-gold)' }}>
+                  <img src="https://res.cloudinary.com/dvbp1coaw/image/upload/v1783709062/IMG_20260711_001309_w6d1wd.jpg"
+                       alt="Memory 2"
+                       className="w-full h-full object-cover"
+                       style={{ filter: 'sepia(0.15) contrast(1.05)' }} />
+                  <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute top-1 right-1 w-3 h-3 border-t-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 left-1 w-3 h-3 border-b-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,26,26,0.4) 0%, transparent 40%)' }} />
+                </div>
+
+                {/* Right Card */}
+                <div className="relative overflow-hidden border-2 aspect-[3/4]"
+                     style={{ borderColor: 'var(--oww-gold)' }}>
+                  <img src="https://res.cloudinary.com/dvbp1coaw/image/upload/v1783705224/IMG20251228122214_yb8qkr.jpg"
+                       alt="Memory 3"
+                       className="w-full h-full object-cover"
+                       style={{ filter: 'sepia(0.15) contrast(1.05)' }} />
+                  <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute top-1 right-1 w-3 h-3 border-t-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 left-1 w-3 h-3 border-b-2 border-l-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2" style={{ borderColor: 'var(--oww-gold)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,26,26,0.4) 0%, transparent 40%)' }} />
+                </div>
               </div>
             )}
 

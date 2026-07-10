@@ -21,7 +21,7 @@ interface ChainLink {
 
 const CHAIN: ChainLink[] = [
   { answer: 'SPARK', clue: 'A tiny flash that starts a fire', hint: 'S _ _ _ K' },
-  { answer: 'PARTY', clue: 'A celebration with friends and the close ones', hint: 'P _ _ _ Y' },
+  { answer: 'LIFE', clue: 'A beautiful, fleeting journey that burns bright', hint: 'L _ _ E' },
   { answer: 'HEART', clue: 'Where love lives, it beats for you', hint: 'H _ _ _ T' },
   { answer: 'DREAM', clue: 'What you see when you close your eyes and wish', hint: 'D _ _ _ M' },
   { answer: 'LOVE', clue: 'The invisible spell that binds two hearts together', hint: 'L _ _ E' },

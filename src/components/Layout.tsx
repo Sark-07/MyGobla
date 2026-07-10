@@ -1,5 +1,6 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
+import { CAROUSEL_IMAGES } from '../constants/images';
 import { useGameState } from '../hooks/useGameState';
 
 interface LayoutProps {
@@ -8,7 +9,7 @@ interface LayoutProps {
 
 const ROUTE_DATA: Record<string, { title: string, verse: string, resonance: number }> = {
   '/': { title: 'THE ARRIVAL', verse: 'A soul arrives, seeking the willow’s blessing...', resonance: 0 },
-  '/cipher': { title: 'THE FIRST SEAL', verse: 'The wheel spins. The first seal awaits your touch.', resonance: 20 },
+  '/cipher': { title: 'THE VEILED TRUTH', verse: 'Life shifts in unexpected ways. Turn the wheel to uncover the truth hidden beneath.', resonance: 20 },
   '/memory': { title: 'ECHOES OF TIME', verse: 'Fragments of the past align. Memories merge into one.', resonance: 40 },
   '/chain': { title: 'THE BINDING', verse: 'The chain of fate. Ignite the branches with your words.', resonance: 60 },
   '/stars': { title: 'CONSTELLATIONS', verse: 'The stars hold secrets written in the dark.', resonance: 80 },
@@ -20,6 +21,14 @@ export function Layout({ children }: LayoutProps) {
   const { state } = useGameState();
   const location = useLocation();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIdx((i) => (i + 1) % CAROUSEL_IMAGES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,19 +59,25 @@ export function Layout({ children }: LayoutProps) {
                 THE CHRONICLE OF GOBLA
               </p>
               
-              {/* Aura Imprint Placeholder */}
+              {/* Photo Carousel (Aura Imprint) */}
               <div className="w-full aspect-[3/4] relative overflow-hidden mb-6 group rounded-sm"
                    style={{ backgroundColor: 'var(--oww-black)', boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)' }}>
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                  <span className="text-4xl mb-4 anim-pulse-gold transition-all duration-700" 
-                        style={{ color: currentData.resonance > 50 ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }}>
-                    ✦
-                  </span>
-                  <p className="font-mono text-[9px] tracking-[0.15em] uppercase"
-                     style={{ color: 'var(--oww-brown-light)' }}>
-                    AURA IMPRESSION<br/>AWAITING MANIFESTATION
-                  </p>
-                </div>
+                {CAROUSEL_IMAGES.map((src, idx) => (
+                  <img 
+                    key={idx}
+                    src={src}
+                    alt="Memory"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${idx === currentImageIdx ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ 
+                      filter: 'sepia(0.6) contrast(1.1) brightness(0.85) hue-rotate(-5deg)',
+                    }}
+                  />
+                ))}
+                
+                {/* Theme overlays */}
+                <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: 'var(--oww-gold)', opacity: 0.1, mixBlendMode: 'color' }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--oww-black)] via-transparent to-[var(--oww-black)] opacity-60 pointer-events-none"></div>
                 
                 {/* Mystical soft glow based on progress */}
                 <div className="absolute inset-0 opacity-30 transition-opacity duration-1000"
@@ -154,7 +169,7 @@ export function Layout({ children }: LayoutProps) {
               </div>
               <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
                 <span>RITUAL DATE:</span>
-                <span className="font-bold">MAY 2026</span>
+                <span className="font-bold">{new Date().toLocaleDateString()}</span>
               </div>
               <div className="flex justify-between border-b border-dotted pb-2" style={{ borderColor: 'var(--oww-brown-light)' }}>
                 <span>THE WILLOW:</span>
