@@ -227,9 +227,9 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
 
         {/* ── Phase: Message ── */}
         {(phase === 'message' || phase === 'full') && (
-          <div className="anim-fade-in-up">
+          <div>
             {/* Name reveal */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 anim-fade-in-up">
               <p className="font-mono text-[10px] tracking-[0.15em] uppercase mb-4"
                  style={{ color: 'var(--oww-brown-light)' }}>
                 ★ THIS WISH WAS GRANTED FOR ★
@@ -254,10 +254,12 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
 
             {/* Birthday message — typewriter */}
             <div ref={messageRef}
-                 className="p-6 sm:p-8 border-2 mb-8 relative"
+                 className="p-6 sm:p-8 border-2 mb-8 relative anim-fade-in-up"
                  style={{ 
                    borderColor: 'var(--oww-brown-light)',
                    backgroundColor: 'rgba(241,231,207,0.06)',
+                   animationDelay: '1.5s',
+                   animationFillMode: 'both'
                  }}>
               {/* Inner border */}
               <div className="absolute inset-2 border pointer-events-none"
