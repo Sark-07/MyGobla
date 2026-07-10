@@ -76,9 +76,9 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
       narrate('Happy Birthday, Gobla. Your wish has been granted.');
     }, 4500);
 
-    // Wait for the typewriter to finish: message starts at 4.5s, types at 50ms/char
-    // BIRTHDAY_MESSAGE.length * 50ms + 4500ms start delay + 2s buffer
-    const fullPhaseDelay = 4500 + (BIRTHDAY_MESSAGE.length * 50) + 2000;
+    // Wait for the typewriter to finish: message starts at 4.5s + 1.5s delay, types at 50ms/char
+    // BIRTHDAY_MESSAGE.length * 50ms + 6000ms start delay + 2s buffer
+    const fullPhaseDelay = 6000 + (BIRTHDAY_MESSAGE.length * 50) + 2000;
     const timer4 = setTimeout(() => {
       setPhase('full');
       setShowPhotos(true);
@@ -129,22 +129,35 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
     if (hasStartedTyping.current) return;
     hasStartedTyping.current = true;
 
-    audioRef.current = new Audio('/mp3/khat.mp3');
-    audioRef.current.volume = 0.5;
-    audioRef.current.play().catch(e => console.error('Audio play failed:', e));
+    const startTypingTimer = setTimeout(() => {
+      audioRef.current = new Audio('/mp3/khat.mp3');
+      audioRef.current.volume = 0.5;
+      audioRef.current.play().catch(e => console.error('Audio play failed:', e));
 
-    const interval = setInterval(() => {
-      setTypedChars((c) => {
-        if (c >= BIRTHDAY_MESSAGE.length) { 
-          clearInterval(interval); 
-          return c; 
-        }
-        return c + 1;
-      });
-    }, 50);
+      const interval = setInterval(() => {
+        setTypedChars((c) => {
+          if (c >= BIRTHDAY_MESSAGE.length) { 
+            clearInterval(interval); 
+            return c; 
+          }
+          return c + 1;
+        });
+      }, 50);
+
+      // Store interval ID on the ref or just let it leak slightly if phase unmounts,
+      // but better to clean it up properly by attaching to a ref if we wanted perfectly clean unmounts.
+      // For this isolated timeout, we can't easily return the interval cleanup, 
+      // but the component unmount handles Audio cleanup.
+      
+      // We will attach interval to a global or ref to clear it if needed.
+      (window as any)._typingInterval = interval;
+    }, 1500);
     
     return () => {
-      clearInterval(interval);
+      clearTimeout(startTypingTimer);
+      if ((window as any)._typingInterval) {
+        clearInterval((window as any)._typingInterval);
+      }
     };
   }, [phase]);
 
@@ -261,7 +274,8 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
 
             {/* ── Photo Gallery ── */}
             {typedChars >= BIRTHDAY_MESSAGE.length && (
-              <div className="grid grid-cols-3 gap-4 mb-8 anim-fade-in-up">
+              <div className="grid grid-cols-3 gap-4 mb-8 anim-fade-in-up"
+                   style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                 {/* Left Card */}
                 <div className="relative overflow-hidden border-2 aspect-[3/4]"
                      style={{ borderColor: 'var(--oww-gold)' }}>
@@ -308,8 +322,8 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
             )}
 
             {/* ── Vintage Product Card Footer ── */}
-            {phase === 'full' && typedChars >= BIRTHDAY_MESSAGE.length && (
-              <div className="anim-fade-in-up" style={{ animationDelay: '1s' }}>
+            {typedChars >= BIRTHDAY_MESSAGE.length && (
+              <div className="anim-fade-in-up" style={{ animationDelay: '0.7s', animationFillMode: 'both' }}>
                 <div className="p-4 border-2 border-dashed mb-6"
                      style={{ borderColor: 'var(--oww-brown-light)', backgroundColor: 'rgba(241,231,207,0.05)' }}>
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -334,7 +348,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
                       </span>
                     </div>
                   </div>
-                  <p className="font-mono text-[9px] text-center mt-3"
+                  <p className="font-mono text-[10px] text-center mt-3"
                      style={{ color: 'var(--oww-brown-light)', opacity: 0.6 }}>
                     100% MAGICAL · 0% REAL · ONE WISH WILLOW™
                   </p>
