@@ -25,7 +25,7 @@ const DEFAULT_STATE: GameState = {
 
 function loadState(): GameState {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved) return { ...DEFAULT_STATE, ...JSON.parse(saved) };
   } catch { /* ignore */ }
   return { ...DEFAULT_STATE };
@@ -33,7 +33,7 @@ function loadState(): GameState {
 
 function saveState(state: GameState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch { /* ignore */ }
 }
 
