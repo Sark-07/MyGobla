@@ -22,6 +22,8 @@ export function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [journeyModalOpen, setJourneyModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -140,6 +142,68 @@ export function Layout({ children }: LayoutProps) {
                  style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}>
                 THE WILLOW'S PROMISE ✦
               </p>
+
+              <>
+                <p
+                  className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-4 pb-2 border-b border-dotted text-right pr-2"
+                  style={{ color: 'var(--oww-brown-light)', borderColor: 'var(--oww-brown-light)' }}
+                  onClick={() => setJourneyModalOpen(true)}
+                  title="Watch The Journey"
+                >
+                  <span className="journey-text">THE JOURNEY ✦</span>
+                </p>
+
+                {journeyModalOpen && (
+                  <div
+                    className="journey-modal-backdrop fixed inset-0 z-[10000] flex items-center justify-center bg-[rgba(10,6,3,0.96)]"
+                    onClick={(e) => { if (e.target === e.currentTarget) { videoRef.current?.pause(); setJourneyModalOpen(false); } }}
+                  >
+                    <div className="journey-modal-card relative rounded-2xl p-6 w-[90vw] max-w-[820px]">
+                      <button
+                        className="jm-close-x absolute top-3 right-4 bg-transparent border-none text-[rgba(212,175,55,0.5)] text-xl cursor-pointer leading-none transition-colors duration-200"
+                        onClick={() => { videoRef.current?.pause(); setJourneyModalOpen(false); }}
+                        aria-label="Close"
+                      >✕</button>
+                      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-center mb-4 text-[rgba(212,175,55,0.7)]">
+                        ✦ &nbsp; THE JOURNEY &nbsp; ✦
+                      </p>
+                      <div className="journey-video-wrapper relative w-full rounded-[10px] overflow-hidden bg-black">
+                        <video
+                          ref={videoRef}
+                          src="/mp4/lapata-1.mp4"
+                          preload="auto"
+                          controls={false}
+                          autoPlay
+                          loop
+                          playsInline
+                          className="absolute inset-0 w-full h-full block object-contain rounded-[10px]"
+                          style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+                        />
+                      </div>
+                      <div className="flex items-center justify-center gap-3.5 mt-5">
+                        <button
+                          className="jm-btn jm-btn-play font-mono text-[10px] tracking-[0.18em] uppercase border border-solid rounded-lg px-5 py-2 cursor-pointer bg-transparent outline-none"
+                          onClick={() => { const v = videoRef.current; if (!v) return; v.paused ? v.play() : v.pause(); }}
+                        >
+                          ▶ &nbsp; Play / Pause
+                        </button>
+                        <button
+                          className="jm-btn jm-btn-mute font-mono text-[10px] tracking-[0.18em] uppercase border border-solid rounded-lg px-5 py-2 cursor-pointer bg-transparent outline-none"
+                          onClick={() => { if (videoRef.current) videoRef.current.muted = !videoRef.current.muted; }}
+                        >
+                          🔊 &nbsp; Mute / Unmute
+                        </button>
+                        <button
+                          className="jm-btn jm-btn-close font-mono text-[10px] tracking-[0.18em] uppercase border border-solid rounded-lg px-5 py-2 cursor-pointer bg-transparent outline-none"
+                          onClick={() => { videoRef.current?.pause(); setJourneyModalOpen(false); }}
+                        >
+                          ✕ &nbsp; Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             </div>
 
             <div className="mb-12 text-right">
