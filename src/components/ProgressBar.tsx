@@ -51,7 +51,7 @@ export function ProgressBar({ currentLevel, completedLevels }: ProgressBarProps)
               </div>
               {/* Level name below (hidden on mobile) */}
               {dot.name && (
-                <span className="hidden lg:block font-mono text-[7px] tracking-[0.08em] mt-0.5 uppercase"
+                <span className="block font-mono text-[5px] sm:text-[7px] tracking-[0.08em] mt-0.5 uppercase max-w-[40px] sm:max-w-none text-center leading-tight truncate"
                       style={{ color: dot.isCompleted ? 'var(--oww-gold)' : 'var(--oww-brown-light)' }}>
                   {dot.name}
                 </span>
