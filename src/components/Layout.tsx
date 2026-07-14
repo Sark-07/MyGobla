@@ -170,7 +170,7 @@ export function Layout({ children }: LayoutProps) {
                       <div className="journey-video-wrapper relative w-full rounded-[10px] overflow-hidden bg-black">
                         <video
                           ref={videoRef}
-                          src="/mp4/lapata-1.mp4"
+                          src="/mp4/lapata-2.mp4"
                           preload="auto"
                           controls={false}
                           autoPlay
