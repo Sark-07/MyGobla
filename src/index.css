@@ -60,6 +60,10 @@ body::before {
   animation: grain-shift 0.5s steps(1) infinite;
 }
 
+body.modal-open::before {
+  animation-play-state: paused;
+}
+
 /* ══════════ TYPOGRAPHY ══════════ */
 
 .font-display { font-family: var(--font-display); }

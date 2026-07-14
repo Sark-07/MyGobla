@@ -26,6 +26,15 @@ export function Layout({ children }: LayoutProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (journeyModalOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+    return () => document.body.classList.remove('modal-open');
+  }, [journeyModalOpen]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIdx((i) => (i + 1) % CAROUSEL_IMAGES.length);
     }, 4500);
