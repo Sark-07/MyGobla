@@ -89,7 +89,7 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         { 
           wish_text: wishText || "A secret wish",
-          email: "iampritamsarkar07@gmail.com"
+          email: "namratakar01@gmail.com"
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       ).then((response) => {
