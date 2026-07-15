@@ -18,7 +18,7 @@ interface WishRevealProps {
   onRevealComplete?: () => void;
 }
 
-const BIRTHDAY_MESSAGE = `I still remember seeing you on March 11th, 2025 at 1:33 PM—a person so jolly, charming, and full of life. You quickly became a very good, and then a very close, friend of mine. I slowly realized just how beautifully different you are, and how uniquely you see the world. You showed me that there is so much more to life than just work.
+const BIRTHDAY_MESSAGE = `I still remember seeing you on March 11th, 2025 at 1:33 PM—a person so jolly, charming, and full of life. You quickly became a very good, and then a very close, friend of mine. I slowly realized just how beautifully different you are, and how uniquely you see the world. You showed me that there is so much more to life than just living.
 
 When I felt low, you stayed. You listened. You brought emotions with you—emotions I hadn't understood in all my 25 years of life. In such a short amount of time, you have taught me so many things about life itself, what it means to truly live. You make me smile; You make my days brighter.
 
