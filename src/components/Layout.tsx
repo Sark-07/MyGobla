@@ -164,7 +164,7 @@ export function Layout({ children }: LayoutProps) {
 
                 {journeyModalOpen && (
                   <div
-                    className="journey-modal-backdrop fixed inset-0 z-[10000] flex items-center justify-center bg-[rgba(10,6,3,0.96)]"
+                    className="journey-modal-backdrop fixed inset-0 z-[10000] flex items-start justify-center pt-[12vh] bg-[rgba(10,6,3,0.96)]"
                     onClick={(e) => { if (e.target === e.currentTarget) { videoRef.current?.pause(); setJourneyModalOpen(false); } }}
                   >
                     <div className="journey-modal-card relative rounded-2xl p-6 w-[90vw] max-w-[820px]">
