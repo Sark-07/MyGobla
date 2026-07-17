@@ -84,20 +84,20 @@ export default function WishReveal({ wishText, wishCipherMode, onRestart, partic
       if (onRevealComplete) onRevealComplete();
 
       // Trigger email silently in the background via EmailJS
-      emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        { 
-          wish_text: wishText || "A secret wish",
-          email: "namratakar01@gmail.com"
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      ).then((response) => {
-        console.log('Wish successfully sealed and sent.', response.status, response.text);
-      }).catch((error) => {
-        console.error('EmailJS 422 Error Details:', error?.text || error);
-        alert(`EmailJS Error: ${error?.text || 'Check console'}`);
-      });
+      // emailjs.send(
+      //   import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      //   import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      //   { 
+      //     wish_text: wishText || "A secret wish",
+      //     email: "namratakar01@gmail.com"
+      //   },
+      //   import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      // ).then((response) => {
+      //   console.log('Wish successfully sealed and sent.', response.status, response.text);
+      // }).catch((error) => {
+      //   console.error('EmailJS 422 Error Details:', error?.text || error);
+      //   alert(`EmailJS Error: ${error?.text || 'Check console'}`);
+      // });
     }, fullPhaseDelay);
 
     return () => {
