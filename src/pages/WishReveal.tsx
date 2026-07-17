@@ -26,7 +26,7 @@ So, the moment you opened this box, you embarked on a journey—through ciphers,
 
 Every puzzle was a piece of you: the spark, the heart, the dream, the love.
 
-You are extraordinary. You are loved. You are the wish that came true. I am so proud of you, and you are doing fantastic.
+You are extraordinary. You are loved. I am so proud of you, and you are doing fantastic.
 
 Happy Birthday, my Gobla.
 
